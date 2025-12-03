@@ -1,0 +1,23 @@
+{
+  "name": "livekit-interrupt-demo",
+  "version": "1.0.0",
+  "description": "Demo: context-aware interrupt handler (ignore filler while speaking)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "demo": "node index.js",
+    "test": "jest --runInBand"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "events": "^3.3.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "directories": {
+    "test": "test"
+  }
+}

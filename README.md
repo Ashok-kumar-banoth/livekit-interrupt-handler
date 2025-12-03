@@ -1,8 +1,8 @@
-Context-Aware Interrupt Handler
+**Context-Aware Interrupt Handler**
 
 This project implements a custom interrupt handler for voice-based agents. The goal is to prevent the agent from being interrupted by small acknowledgement words while it is speaking.
 
-Features
+**Features**
 
 Ignores filler/acknowledgement words during agent speech
 (e.g., “yeah”, “ok”, “hmm”, “right”)

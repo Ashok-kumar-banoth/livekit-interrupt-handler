@@ -1,24 +1,36 @@
 **Context-Aware Interrupt Handler**
 
-This project implements a custom interrupt handler for voice-based agents. The goal is to prevent the agent from being interrupted by small acknowledgement words while it is speaking.
+This project implements an interrupt-handling layer for voice agents. The goal is to prevent accidental interruptions when the user makes small acknowledgement sounds, while still allowing intentional interruption commands.
+
+The system classifies user speech into:
+
+-->Acknowledgements → ignored when the agent is speaking
+
+-->Interrupt commands → immediately stop agent speech
+
+-->Normal user input → processed when the agent is silent
+
+-->Timeout / low confidence inputs → handled safely without breaking the flow
+
+This matches the assignment requirement of selective interrupt handling without modifying the VAD pipeline.
 
 **Features**
 
-Ignores filler/acknowledgement words during agent speech
-(e.g., “yeah”, “ok”, “hmm”, “right”)
+-->Ignores filler words while the agent is speaking
+(yeah, ok, hmm, right, etc.)
 
-Allows the same words when the agent is silent
+-->Treats the same words as valid input when the agent is silent
 
-Detects clear interrupt commands
-(e.g., “stop”, “wait”, “no”, “hold on”)
+-->Detects clear interruption commands
+(stop, wait, no, hold on, etc.)
 
-Handles mixed inputs such as “yeah wait a second”
+-->Detects mixed utterances (e.g., “yeah wait a second”)
 
-Includes fallback handling for STT timeouts
+-->Handles STT timeouts gracefully
 
-Fully tested with Jest
+-->Fully covered by automated Jest tests
 
-Project Structure
+**Folder Structure**
 src/
   audio/
     interruptHandler.js
@@ -28,31 +40,37 @@ src/
     mockSttService.js
   config/
     interrupt-config.js
+
 test/
   interruptHandler.test.js
+
 index.js
+README.md
+package.json
 
-Installation
-npm install
+**The console will show events such as:**
 
-Run Demo
-npm run demo
+ignoredAck
+userUtterance
+interruption
+ambiguousInput
 
-Run Tests
-npm test
+These demonstrate all required cases:
+1.Filler ignored during agent speech
+2.Filler accepted when agent is silent
+3.Clear interruption
+4.Mixed interruptio
 
-Configuration
+**Configuration**
+You can adjust:
+-->acknowledgement words
+-->interrupt words
+-->STT timeout
+-->confidence threshold
+in:
+src/config/interrupt-config.js
 
-Edit src/config/interrupt-config.js to adjust:
-
-ignore words
-
-interrupt words
-
-STT timeout
-
-confidence threshold
-
-Proof
-
-Demo video clips can be placed in the proof/ folder as required.
+Example:
+IGNORE_LIST: ["yeah", "ok", "hmm"],
+INTERRUPT_LIST: ["stop", "wait", "no"],
+MIN_CONFIDENCE: 0.55
